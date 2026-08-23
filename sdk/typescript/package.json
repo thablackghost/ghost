@@ -9,7 +9,7 @@
   "dependencies": {
     "@solana/web3.js": "^1.95",
     "@solana/spl-token": "^0.4",
-    "@coral-xyz/anchor": "^0.30.1"
+    "@coral-xyz/anchor": "^0.32.1"
   },
   "devDependencies": {
     "typescript": "^5"
