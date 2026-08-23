@@ -1,110 +1,66 @@
-# GHOST Token (GHOST)
+# BLACK GHOST (GHOST)
 
-A production-grade SPL Token-2022 project on Solana. Authority-controlled minting,
-standard transfers, burn support, and comprehensive security features including
-timelock-based authority rotation and emergency pause.
+A meme token on Solana built with SPL Token-2022. Transparent, authority-controlled unlimited minting with comprehensive security features.
 
-## Token Parameters
+## Token Info
 
-| Parameter       | Value                                                              |
-|-----------------|--------------------------------------------------------------------|
-| **Name**        | GHOST                                                              |
-| **Symbol**      | GHOST                                                              |
-| **Decimals**    | 9                                                                  |
-| Initial Supply  | 10,000,000,000 (10 billion) GHOST                                  |
-| Raw Supply      | 10,000,000,000,000,000,000 raw units (10B × 10⁹)                   |
-| Max Supply      | **Unlimited** (minting controlled exclusively by designated authorities) |
-| Token Program   | SPL Token-2022                                                     |
-| Transfer Tax    | **None** — standard 1:1 transfers only                             |
-| Burn            | Supported                                                          |
+| Parameter | Value |
+|-----------|-------|
+| **Name** | BLACK GHOST |
+| **Symbol** | GHOST |
+| **Decimals** | 9 |
+| **Supply** | 1,000,000,000 (1 billion) |
+| **Raw Supply** | 1,000,000,000,000,000,000 |
+| **Max Supply** | **Unlimited** (authority-controlled minting) |
+| **Token Standard** | SPL Token-2022 |
+| **Tax** | 0% — no hidden fees |
+| **Website** | [thablackghost.com](https://thablackghost.com) |
 
-## Architecture
+## Contract
 
 ```
-programs/ghost/src/
-├── lib.rs              # Entry point, #[program] module
-├── constants.rs        # Token constants, PDA seeds, limits
-├── config.rs           # GlobalConfig state and validation
-├── errors.rs           # Centralized error enum
-├── events.rs           # Structured event emissions
-├── version.rs          # Version tracking and compatibility
-├── instructions/       # Instruction handler implementations
-├── state/             # Program state structs (PDAs)
-├── accounts/          # Anchor #[derive(Accounts)] structs
-├── authorities/       # Authority management logic
-├── token/             # Token operation helpers
-├── metadata/          # On-chain metadata management
-├── security/          # Pause, emergency-pause, invariants
-├── math/              # Checked arithmetic helpers
-├── validation/        # Input validation utilities
-├── invariants/        # On-chain invariant assertions
-└── utils/             # General utilities
+DK9MPoDFDPyCZG16ESkY6mUPrpKJaeGVpmEjwvWghost
 ```
 
-## Quick Start
+[View on Solana Explorer](https://explorer.solana.com/address/DK9MPoDFDPyCZG16ESkY6mUPrpKJaeGVpmEjwvWghost)
 
-### Prerequisites
+## Logo
 
-- Rust 1.80.0 (see `rust-toolchain.toml`)
-- Solana CLI 1.18+
-- Anchor CLI 0.30.1
-- Node.js 18+ (for tests)
+![BLACK GHOST](https://raw.githubusercontent.com/thablackghost/ghost/main/metadata/logo/ghost-logo.png)
 
-### Build
+## Build
 
 ```bash
-# Build the program
 anchor build
-
-# Build with verifiable flag (for mainnet)
-anchor build --verifiable
 ```
 
-### Test
+## Deploy
 
 ```bash
-# Run all tests
-anchor test
-
-# Run a specific test file
-anchor test --skip-build tests/ghost.test.ts
-```
-
-### Deploy
-
-```bash
-# Devnet
-anchor deploy --provider.cluster devnet
-
-# Mainnet (requires confirmation)
 anchor deploy --provider.cluster mainnet
 ```
 
 ## Authority Model
 
-| Authority          | Permissions                                                     |
-|--------------------|-----------------------------------------------------------------|
-| **Admin**          | Mint tokens, update config, pause program, initiate rotations   |
-| **Metadata**       | Update on-chain token metadata (name, symbol, URI)             |
-| **Emergency**      | Emergency-pause and emergency-resume the program               |
+| Authority | Permissions |
+|-----------|------------|
+| **Admin** | Mint, pause, update config, rotate authorities |
+| **Metadata** | Update token metadata (name, symbol, URI) |
+| **Emergency** | Emergency pause/resume |
 
-- Authority rotations require a **24-hour timelock** before they can be accepted.
-- The emergency authority is intentionally separated from the admin to allow
-  a distinct key to respond to security incidents.
-- Metadata can be permanently **frozen** to guarantee immutability.
+- 24-hour timelock for authority rotations
+- Metadata can be frozen permanently
+- No freeze authority on token accounts
 
-## Security Features
+## Security
 
-- **Authority-gated minting** — Only the admin authority can mint new tokens.
-- **Timelocked authority rotation** — 24-hour delay prevents hostile takeover.
-- **Dual pause system** — Standard pause (admin) + emergency pause (emergency authority).
-- **Metadata freeze** — Permanent immutability option for token metadata.
-- **Checked arithmetic** — All math uses `checked_*` operations to prevent overflow.
-- **PDA enforcement** — All state accounts are derived via PDAs with canonical seeds.
-- **Comprehensive validation** — Every input is validated before state mutation.
-- **Invariant assertions** — Supply and state invariants are checked on every operation.
-- **No hidden taxes** — Standard SPL Token-2022 transfers with no transfer fees or hooks.
+- Authority-gated minting
+- Timelocked authority rotation
+- Emergency pause system
+- Checked arithmetic (no overflow)
+- PDA enforcement for all state
+- Supply invariants on every mint/burn
 
 ## License
 
-MIT — see [LICENSE](./LICENSE) for details.
+MIT
