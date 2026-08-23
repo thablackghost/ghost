@@ -1,0 +1,6 @@
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+too-many-arguments-threshold = 12
+cognitive-complexity-threshold = 30
+# Disable specific lints that are too noisy for our architecture
+allow-dbg-in-tests = true

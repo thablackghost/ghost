@@ -1,0 +1,63 @@
+# Rust / Cargo
+target/
+**/target/
+**/target/**/*.rs.bk
+*.pdb
+
+# Node.js / TypeScript
+node_modules/
+dist/
+*.tsbuildinfo
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Anchor
+.anchor/
+test-ledger/
+
+# Secrets
+*.keypair
+*-keypair.json
+id.json
+*.secret
+secrets/
+
+# Build artifacts
+*.so
+*.dylib
+*.wasm
+
+# Coverage
+coverage/
+*.profraw
+*.profdata
+lcov.info
+
+# Fuzz
+fuzz/artifacts/
+fuzz/corpus/
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Temp
+tmp/
+temp/
+*.tmp
+*.bak

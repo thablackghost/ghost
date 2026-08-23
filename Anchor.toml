@@ -1,0 +1,32 @@
+[toolchain]
+anchor_version = "0.30.1"
+
+[features]
+seeds = true
+skip-lint = false
+
+[programs.localnet]
+ghost = "DK9MPoDFDPyCZG16ESkY6mUPrpKJaeGVpmEjwvWghost"
+
+[programs.devnet]
+ghost = "DK9MPoDFDPyCZG16ESkY6mUPrpKJaeGVpmEjwvWghost"
+
+[programs.mainnet]
+ghost = "DK9MPoDFDPyCZG16ESkY6mUPrpKJaeGVpmEjwvWghost"
+
+[provider]
+cluster = "mainnet"
+wallet = "C:\\Users\\HP\\Desktop\\wallet\\ghost-dev.json"
+
+[registry]
+url = "https://api.apr.dev"
+
+[test]
+startup_wait = 5000
+
+[test.validator]
+url = "https://api.devnet.solana.com"
+
+[scripts]
+test = "cargo test"
+build = "anchor build"

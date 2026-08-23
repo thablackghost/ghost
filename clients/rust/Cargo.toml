@@ -1,0 +1,17 @@
+[package]
+name = "ghost-cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "ghost"
+path = "src/main.rs"
+
+[dependencies]
+ghost-sdk = { path = "../../sdk/rust" }
+solana-sdk = "2.1.0"
+solana-client = "2.1.0"
+spl-token-2022 = "6.0.0"
+clap = { version = "4.5", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+anyhow = "1.0"

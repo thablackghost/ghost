@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  SOLANA_VERSION: "1.18.0"
+  RUST_VERSION: "1.75.0"
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          override: true
+
+      - name: Cache Solana
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/solana
+          key: solana-${{ env.SOLANA_VERSION }}
+
+      - name: Install Solana
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v${{ env.SOLANA_VERSION }}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor
+        run: cargo install --git https://github.com/coral-xyz/anchor anchor-cli --locked
+
+      - name: Build program
+        run: anchor build --verifiable
+
+      - name: Run tests
+        run: anchor test --skip-build
+
+      - name: Create release artifacts
+        run: |
+          mkdir -p release
+          cp target/deploy/ghost_token.so release/
+          cp target/idl/ghost_token.json release/
+          cp target/deploy/ghost_token.so release/ghost_token_$(echo $GITHUB_REF | sed 's/refs\/tags\///').so
+          cd release && sha256sum *.so > checksums.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+          files: |
+            release/ghost_token.so
+            release/ghost_token_*.so
+            release/ghost_token.json
+            release/checksums.txt
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

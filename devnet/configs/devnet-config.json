@@ -1,0 +1,31 @@
+{
+  "cluster": "devnet",
+  "rpc_url": "https://api.devnet.solana.com",
+  "ws_url": "wss://api.devnet.solana.com",
+  "explorer_url": "https://explorer.solana.com",
+  "program_id": "Gh0st111111111111111111111111111111111111111",
+  "token_2022_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "mint_address": "PLACEHOLDER_MINT_ADDRESS",
+  "config_pda": "PLACEHOLDER_CONFIG_PDA",
+  "token_details": {
+    "name": "GHOST",
+    "symbol": "GHOST",
+    "decimals": 9,
+    "initial_supply": 10000000000
+  },
+  "authorities": {
+    "mint_authority": "PLACEHOLDER_MINT_AUTHORITY",
+    "admin_authority": "PLACEHOLDER_ADMIN_AUTHORITY",
+    "emergency_authority": "PLACEHOLDER_EMERGENCY_AUTHORITY",
+    "metadata_authority": "PLACEHOLDER_METADATA_AUTHORITY",
+    "upgrade_authority": "PLACEHOLDER_UPGRADE_AUTHORITY"
+  },
+  "timelock_duration_seconds": 60,
+  "metadata_uri": "https://arweave.net/placeholder-ghost-logo",
+  "deploy_transaction": "PLACEHOLDER_DEPLOY_TX",
+  "initialize_transaction": "PLACEHOLDER_INIT_TX",
+  "faucet": {
+    "airdrop_amount_sol": 5,
+    "max_retries": 3
+  }
+}

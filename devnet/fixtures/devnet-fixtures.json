@@ -1,0 +1,71 @@
+{
+  "cluster": "devnet",
+  "program_id": "Gh0st111111111111111111111111111111111111111",
+  "fixtures": {
+    "initialize": {
+      "initial_supply": 10000000000,
+      "decimals": 9,
+      "expected_mint_owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "expected_config_seeds": ["config"],
+      "expected_result": "success"
+    },
+    "mint": {
+      "valid_amounts": [1, 1000, 1000000, 1000000000],
+      "invalid_amounts": [0],
+      "expected_result_valid": "success",
+      "expected_result_zero": "InvalidAmount",
+      "expected_result_unauthorized": "UnauthorizedMinter",
+      "expected_result_paused": "Paused"
+    },
+    "burn": {
+      "valid_amounts": [1, 500, 10000],
+      "amount_exceeding_balance": 999999999999,
+      "expected_result_valid": "success",
+      "expected_result_exceed": "InsufficientFunds"
+    },
+    "pause": {
+      "expected_result_valid": "success",
+      "expected_result_unauthorized": "UnauthorizedEmergency"
+    },
+    "resume": {
+      "expected_result_valid": "success",
+      "expected_result_unauthorized": "UnauthorizedEmergency"
+    },
+    "authority_rotation": {
+      "authority_types": {
+        "mint": 0,
+        "emergency": 1,
+        "admin": 2
+      },
+      "expected_result_unauthorized_admin": "UnauthorizedAdmin",
+      "expected_result_timelock_not_expired": "TimelockNotExpired",
+      "expected_result_rotation_pending": "RotationAlreadyPending",
+      "expected_result_no_pending": "NoPendingRotation",
+      "timelock_duration_seconds": 60
+    },
+    "account_validation": {
+      "wrong_config_pda": "InvalidConfigPDA",
+      "wrong_config_bump": "InvalidConfigBump",
+      "wrong_mint": "InvalidMint",
+      "wrong_mint_owner": "InvalidMintOwner",
+      "wrong_token_program": "InvalidTokenProgram",
+      "missing_signer": "MissingSigner"
+    }
+  },
+  "test_accounts": {
+    "mint_authority_seed": "test-mint-authority-devnet-001",
+    "admin_authority_seed": "test-admin-authority-devnet-001",
+    "emergency_authority_seed": "test-emergency-authority-devnet-001",
+    "token_owner_seed": "test-token-owner-devnet-001",
+    "attacker_seed": "test-attacker-devnet-001"
+  },
+  "expected_events": [
+    "TokensMinted",
+    "TokensBurned",
+    "AuthorityRotationInitiated",
+    "AuthorityRotationConfirmed",
+    "AuthorityRotationCancelled",
+    "EmergencyPaused",
+    "EmergencyResumed"
+  ]
+}

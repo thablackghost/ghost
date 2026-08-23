@@ -1,0 +1,16 @@
+{
+  "name": "GHOST",
+  "symbol": "GHOST",
+  "description": "A meme token called GHOST. Built on Solana using SPL Token-2022. Features unlimited minting, emergency pause, and authority rotation security.",
+  "image": "https://arweave.net/placeholder-ghost-logo",
+  "external_url": "https://ghost-token.io",
+  "attributes": [
+    {"trait_type": "category", "value": "meme"},
+    {"trait_type": "blockchain", "value": "solana"},
+    {"trait_type": "token_standard", "value": "token-2022"},
+    {"trait_type": "decimals", "value": "9"},
+    {"trait_type": "initial_supply", "value": "10000000000"},
+    {"trait_type": "mint_policy", "value": "unlimited"},
+    {"trait_type": "program_id", "value": "Gh0st111111111111111111111111111111111111111"}
+  ]
+}

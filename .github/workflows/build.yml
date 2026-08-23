@@ -1,0 +1,71 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  SOLANA_VERSION: "1.18.0"
+  RUST_VERSION: "1.75.0"
+
+jobs:
+  build:
+    name: Build and Verify Program
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          override: true
+
+      - name: Cache Solana
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/solana
+          key: solana-${{ env.SOLANA_VERSION }}
+
+      - name: Install Solana
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v${{ env.SOLANA_VERSION }}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor
+        run: cargo install --git https://github.com/coral-xyz/anchor anchor-cli --locked
+
+      - name: Build program
+        run: anchor build
+
+      - name: Verify build output
+        run: |
+          if [ -f target/deploy/ghost_token.so ]; then
+            echo "Build successful: ghost_token.so exists"
+            ls -la target/deploy/ghost_token.so
+          else
+            echo "Build failed: ghost_token.so not found"
+            exit 1
+          fi
+
+      - name: Verify program ID
+        run: |
+          if [ -f target/deploy/ghost_token-keypair.json ]; then
+            PUBKEY=$(solana-keygen pubkey target/deploy/ghost_token-keypair.json)
+            echo "Program ID: $PUBKEY"
+            if [ "$PUBKEY" = "Gh0st111111111111111111111111111111111111111" ]; then
+              echo "Program ID verified"
+            else
+              echo "WARNING: Program ID mismatch!"
+            fi
+          fi
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: program-build
+          path: |
+            target/deploy/ghost_token.so
+            target/idl/ghost_token.json
+          retention-days: 7
